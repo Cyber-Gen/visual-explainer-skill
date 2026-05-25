@@ -22,20 +22,20 @@ Two install paths, depending on whether you want the full plugin or just the ski
 
 ### Option 1 — Full plugin (recommended)
 
-Download `visual-explainer-plugin-vX.Y.Z.zip` from the [latest release](https://github.com/Cyber-Gen/visual-explainer/releases/latest), unzip into your Claude Code plugins directory, and enable it. Or, for development, point Claude Code at this repo directly:
+Download `visual-explainer-plugin-vX.Y.Z.zip` from the [latest release](https://github.com/Cyber-Gen/visual-explainer-skill/releases/latest), unzip into your Claude Code plugins directory, and enable it. Or, for development, point Claude Code at this repo directly:
 
 ```bash
-git clone https://github.com/Cyber-Gen/visual-explainer.git
+git clone https://github.com/Cyber-Gen/visual-explainer-skill.git
 claude --plugin-dir ./visual-explainer
 ```
 
 ### Option 2 — Skill only
 
-Download `visual-explainer-skill-vX.Y.Z.zip` from the [latest release](https://github.com/Cyber-Gen/visual-explainer/releases/latest) and unzip into `~/.claude/skills/`:
+Download `visual-explainer-skill-vX.Y.Z.zip` from the [latest release](https://github.com/Cyber-Gen/visual-explainer-skill/releases/latest) and unzip into `~/.claude/skills/`:
 
 ```bash
 mkdir -p ~/.claude/skills
-curl -L -o /tmp/ve-skill.zip https://github.com/Cyber-Gen/visual-explainer/releases/latest/download/visual-explainer-skill-latest.zip
+curl -L -o /tmp/ve-skill.zip https://github.com/Cyber-Gen/visual-explainer-skill/releases/latest/download/visual-explainer-skill-latest.zip
 unzip /tmp/ve-skill.zip -d ~/.claude/skills/
 ```
 

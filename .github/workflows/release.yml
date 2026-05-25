@@ -60,11 +60,10 @@ jobs:
           [ "$missing" -eq 0 ]
 
       - name: Build plugin zip (explicit allowlist)
-        id: plugin_zip
         run: |
           set -euo pipefail
           version="$(jq -r '.version' .claude-plugin/plugin.json)"
-          zipname="visual-explainer-v${version}.zip"
+          zipname="visual-explainer-plugin-v${version}.zip"
           stage="$(mktemp -d)"
           root="$stage/visual-explainer"
           mkdir -p \
@@ -80,31 +79,66 @@ jobs:
           cp README.md                                                     "$root/README.md"
           cp LICENSE                                                       "$root/LICENSE"
           (cd "$stage" && zip -r "$GITHUB_WORKSPACE/$zipname" visual-explainer)
-          sha="$(sha256sum "$zipname" | awk '{print $1}')"
-          echo "name=$zipname" >> "$GITHUB_OUTPUT"
-          echo "sha=$sha"      >> "$GITHUB_OUTPUT"
+          cp "$zipname" "$GITHUB_WORKSPACE/visual-explainer-plugin-latest.zip"
+
+      - name: Build standalone skill zip (explicit allowlist)
+        run: |
+          set -euo pipefail
+          version="$(jq -r '.version' .claude-plugin/plugin.json)"
+          zipname="visual-explainer-skill-v${version}.zip"
+          stage="$(mktemp -d)"
+          root="$stage/visual-explainer"
+          mkdir -p \
+            "$root/references" \
+            "$root/examples"
+          cp skills/visual-explainer/SKILL.md                              "$root/SKILL.md"
+          cp skills/visual-explainer/references/design-system.md           "$root/references/"
+          cp skills/visual-explainer/references/visual-snapshot-library.md "$root/references/"
+          cp skills/visual-explainer/references/writing-voice.md           "$root/references/"
+          cp skills/visual-explainer/examples/reference-example.html       "$root/examples/"
+          (cd "$stage" && zip -r "$GITHUB_WORKSPACE/$zipname" visual-explainer)
+          cp "$zipname" "$GITHUB_WORKSPACE/visual-explainer-skill-latest.zip"
+
+      - name: Generate checksums
+        run: |
+          set -euo pipefail
+          sha256sum \
+            visual-explainer-plugin-v*.zip \
+            visual-explainer-plugin-latest.zip \
+            visual-explainer-skill-v*.zip \
+            visual-explainer-skill-latest.zip \
+            > release-assets-sha256.txt
 
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
-          ZIP_NAME: ${{ steps.plugin_zip.outputs.name }}
-          ZIP_SHA:  ${{ steps.plugin_zip.outputs.sha }}
           TAG:      ${{ github.ref_name }}
         run: |
           set -euo pipefail
+          version="$(jq -r '.version' .claude-plugin/plugin.json)"
+          plugin_zip="visual-explainer-plugin-v${version}.zip"
+          skill_zip="visual-explainer-skill-v${version}.zip"
           notes_file="$(mktemp)"
           cat > "$notes_file" <<EOF
-          ## Asset
+          ## Assets
 
-          - \`${ZIP_NAME}\` — visual-explainer plugin. Extract and load with \`claude --plugin-dir ./visual-explainer\`, or install via a Claude Code plugin marketplace.
+          - \`${plugin_zip}\` — full plugin bundle with the standalone skill included.
+          - \`visual-explainer-plugin-latest.zip\` — latest alias for the full plugin bundle.
+          - \`${skill_zip}\` — standalone skill bundle for \`~/.claude/skills/\`.
+          - \`visual-explainer-skill-latest.zip\` — latest alias for the standalone skill bundle.
+          - \`release-assets-sha256.txt\` — SHA256 checksums for all attached zip assets.
 
           ## SHA256
 
           \`\`\`
-          ${ZIP_SHA}  ${ZIP_NAME}
+          $(cat release-assets-sha256.txt)
           \`\`\`
           EOF
           gh release create "$TAG" \
-            "$ZIP_NAME" \
+            "$plugin_zip" \
+            "visual-explainer-plugin-latest.zip" \
+            "$skill_zip" \
+            "visual-explainer-skill-latest.zip" \
+            "release-assets-sha256.txt" \
             --title "visual-explainer ${TAG}" \
             --notes-file "$notes_file"
