@@ -22,7 +22,19 @@ Two install paths, depending on whether you want the full plugin or just the ski
 
 ### Option 1 — Full plugin (recommended)
 
-Download `visual-explainer-plugin-vX.Y.Z.zip` from the [latest release](https://github.com/Cyber-Gen/visual-explainer-skill/releases/latest), unzip into your Claude Code plugins directory, and enable it. Or, for development, point Claude Code at this repo directly:
+Download `visual-explainer-plugin-vX.Y.Z.zip` from the [latest release](https://github.com/Cyber-Gen/visual-explainer-skill/releases/latest).
+
+#### Upload in Claude.ai / Claude Desktop
+
+Use the same plugin upload flow in Claude.ai and Claude Desktop. Cowork, Chat, and Code should all accept the exact same `plugin.zip`.
+
+1. Download `visual-explainer-plugin-vX.Y.Z.zip`.
+2. Open the plugin installer / upload flow in Claude.ai or Claude Desktop.
+3. Choose **Upload plugin** and select the zip.
+4. Confirm the install and enable `visual-explainer`.
+5. Invoke it normally after install.
+
+#### Claude Code development install
 
 ```bash
 git clone https://github.com/Cyber-Gen/visual-explainer-skill.git
@@ -31,7 +43,19 @@ claude --plugin-dir ./visual-explainer
 
 ### Option 2 — Skill only
 
-Download `visual-explainer-skill-vX.Y.Z.zip` from the [latest release](https://github.com/Cyber-Gen/visual-explainer-skill/releases/latest) and unzip into `~/.claude/skills/`:
+Download `visual-explainer-skill-vX.Y.Z.zip` from the [latest release](https://github.com/Cyber-Gen/visual-explainer-skill/releases/latest).
+
+#### Upload in Claude.ai / Claude Desktop
+
+Use the same skill upload flow in Claude.ai and Claude Desktop. Cowork, Chat, and Code should all accept the exact same `skill.zip`.
+
+1. Download `visual-explainer-skill-vX.Y.Z.zip`.
+2. Open the skill installer / upload flow in Claude.ai or Claude Desktop.
+3. Choose **Upload skill** and select the zip.
+4. Confirm the install and enable `visual-explainer`.
+5. Invoke it normally after install.
+
+#### Claude Code filesystem install
 
 ```bash
 mkdir -p ~/.claude/skills
