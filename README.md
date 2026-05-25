@@ -38,7 +38,7 @@ Use the same plugin upload flow in Claude.ai and Claude Desktop. Cowork, Chat, a
 
 ```bash
 git clone https://github.com/Cyber-Gen/visual-explainer-skill.git
-claude --plugin-dir ./visual-explainer
+claude --plugin-dir ./visual-explainer-skill
 ```
 
 ### Option 2 — Skill only
