@@ -52,11 +52,13 @@ git tag -a "v${VERSION}" -m "visual-explainer v${VERSION}"
 git push origin "v${VERSION}"
 ```
 
-Pushing that tag triggers `/home/runner/work/visual-explainer-skill/visual-explainer-skill/.github/workflows/release.yml`, which publishes:
+Pushing that tag triggers `.github/workflows/release.yml`, which publishes:
 
 - `visual-explainer-plugin-vX.Y.Z.zip`
 - `visual-explainer-skill-vX.Y.Z.zip`
 - `release-assets-sha256.txt`
+
+If you create the tag in GitHub instead of locally, use the same `vX.Y.Z` name and point it at the commit whose `.claude-plugin/plugin.json` already contains `X.Y.Z`.
 
 ## Invoke
 
