@@ -1,0 +1,19 @@
+{
+  "name": "visual-explainer",
+  "version": "0.1.0",
+  "description": "Editorial-grade, scrollable HTML visual explainers that thread a single concrete example through every stage of a multi-step concept.",
+  "author": {
+    "name": "Cyber-Gen",
+    "url": "https://github.com/Cyber-Gen"
+  },
+  "homepage": "https://github.com/Cyber-Gen/visual-explainer",
+  "repository": "https://github.com/Cyber-Gen/visual-explainer",
+  "license": "MIT",
+  "keywords": [
+    "explainer",
+    "visual",
+    "html",
+    "education",
+    "skill"
+  ]
+}

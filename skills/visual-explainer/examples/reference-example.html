@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Product Lifecycle, Explained</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F2EDE2;
+    --paper-warm: #ECE4D3;
+    --ink: #1C1814;
+    --ink-soft: #4A413A;
+    --forest: #2D4A2B;
+    --sage: #8FA68E;
+    --sage-light: #C7D3C2;
+    --terracotta: #C8624A;
+    --rust: #A04A33;
+    --gold: #C9A961;
+    --line: rgba(28, 24, 20, 0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Paper grain texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(rgba(28,24,20,0.025) 1px, transparent 1px),
+      radial-gradient(rgba(28,24,20,0.015) 1px, transparent 1px);
+    background-size: 3px 3px, 7px 7px;
+    background-position: 0 0, 1px 2px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 28px;
+  }
+
+  .eyebrow::before {
+    content: "✦";
+    margin-right: 10px;
+    color: var(--gold);
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-variation-settings: "SOFT" 50, "WONK" 1;
+    font-size: clamp(44px, 8vw, 88px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    font-variation-settings: "SOFT" 100, "WONK" 1;
+    color: var(--forest);
+  }
+
+  .hero-intro {
+    max-width: 620px;
+    font-size: 17px;
+    color: var(--ink-soft);
+    margin-bottom: 40px;
+  }
+
+  .companion-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--paper-warm);
+    border: 1px solid var(--line);
+    padding: 16px 22px;
+    border-radius: 4px;
+    max-width: 600px;
+  }
+
+  .companion-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--forest);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: var(--paper);
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .companion-text {
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  .companion-text strong {
+    color: var(--forest);
+    font-weight: 500;
+  }
+
+  /* STAGE SECTIONS */
+  .stage {
+    padding: 80px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .stage:nth-child(even) {
+    background: var(--paper-warm);
+  }
+
+  .stage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .stage-content { position: relative; }
+
+  .stage-number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--rust);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .stage-number-line {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+    max-width: 80px;
+  }
+
+  .stage h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-variation-settings: "SOFT" 30;
+    font-size: clamp(36px, 5vw, 54px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .stage h2 em {
+    font-style: italic;
+    font-variation-settings: "SOFT" 100, "WONK" 1;
+    color: var(--forest);
+  }
+
+  .stage-question {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 19px;
+    color: var(--rust);
+    margin-bottom: 24px;
+    padding-left: 16px;
+    border-left: 2px solid var(--terracotta);
+  }
+
+  .stage p {
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+  }
+
+  .stage p strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .key-activities {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--line);
+  }
+
+  .key-activities-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 12px;
+  }
+
+  .activity-tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    margin: 0 6px 6px 0;
+    color: var(--ink-soft);
+  }
+
+  .stage:nth-child(even) .activity-tag {
+    background: var(--paper-warm);
+    border-color: rgba(28,24,20,0.15);
+  }
+
+  /* VISUAL PANELS */
+  .visual-panel {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 28px;
+    position: relative;
+    box-shadow: 0 1px 0 rgba(28,24,20,0.04), 0 8px 24px rgba(28,24,20,0.05);
+  }
+
+  .stage:nth-child(even) .visual-panel {
+    background: #FAF6EC;
+  }
+
+  .visual-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .visual-label::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: var(--terracotta);
+    border-radius: 50%;
+  }
+
+  /* STAGE 1: Discovery — sticky notes */
+  .sticky-stack { position: relative; height: 280px; }
+
+  .sticky {
+    position: absolute;
+    width: 180px;
+    padding: 16px 14px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.4;
+    box-shadow: 0 6px 14px rgba(28,24,20,0.12);
+    color: var(--ink);
+  }
+
+  .sticky-1 { background: #F5E6A8; transform: rotate(-4deg); top: 0; left: 0; }
+  .sticky-2 { background: #F2C49B; transform: rotate(3deg); top: 30px; left: 140px; }
+  .sticky-3 { background: #D4E1B8; transform: rotate(-2deg); top: 130px; left: 50px; }
+  .sticky-attrib {
+    display: block;
+    margin-top: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-style: normal;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+  }
+
+  /* STAGE 2: Research — chart + competitor list */
+  .research-stack { display: grid; gap: 20px; }
+
+  .mini-chart {
+    display: flex;
+    align-items: end;
+    gap: 8px;
+    height: 110px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .bar {
+    flex: 1;
+    background: var(--sage-light);
+    border-radius: 2px 2px 0 0;
+    position: relative;
+  }
+
+  .bar.highlight { background: var(--forest); }
+
+  .bar-label {
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .chart-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 28px;
+  }
+
+  .competitors { margin-top: 12px; }
+
+  .competitor-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 13px;
+  }
+
+  .competitor-row:last-child { border: none; }
+
+  .comp-name { font-weight: 500; }
+  .comp-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--rust);
+  }
+
+  /* STAGE 3: Define — MVP scope */
+  .scope-box {
+    display: grid;
+    gap: 12px;
+  }
+
+  .scope-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 14px;
+    background: var(--paper-warm);
+    border-radius: 4px;
+    font-size: 13px;
+  }
+
+  .stage:nth-child(even) .scope-row { background: var(--paper); }
+
+  .scope-row.in { border-left: 3px solid var(--forest); }
+  .scope-row.out { border-left: 3px solid var(--terracotta); opacity: 0.6; text-decoration: line-through; }
+  .scope-row.maybe { border-left: 3px solid var(--gold); }
+
+  .scope-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    padding: 2px 6px;
+    border-radius: 2px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .scope-tag.out { background: var(--terracotta); }
+  .scope-tag.maybe { background: var(--gold); color: var(--ink); }
+
+  /* STAGE 4: Design — wireframes */
+  .phone-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .phone {
+    width: 130px;
+    height: 240px;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 16px;
+    padding: 16px 10px;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .stage:nth-child(even) .phone { background: #FAF6EC; }
+
+  .phone-notch {
+    width: 30px;
+    height: 4px;
+    background: var(--ink);
+    border-radius: 2px;
+    margin: 0 auto 10px;
+  }
+
+  .phone-line { height: 6px; background: var(--sage-light); border-radius: 2px; margin-bottom: 8px; }
+  .phone-line.short { width: 60%; }
+  .phone-line.medium { width: 80%; }
+  .phone-line.dark { background: var(--ink); height: 8px; }
+
+  .phone-block {
+    height: 50px;
+    background: var(--sage-light);
+    border-radius: 4px;
+    margin: 10px 0;
+  }
+
+  .phone-block.green { background: var(--sage); }
+  .phone-block.terra { background: var(--terracotta); }
+
+  .phone-arrow {
+    color: var(--rust);
+    font-size: 24px;
+    font-family: serif;
+  }
+
+  /* STAGE 5: Build — code/commits */
+  .commit-list {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    line-height: 1.7;
+  }
+
+  .commit {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--line);
+    align-items: center;
+  }
+
+  .commit-hash { color: var(--gold); font-weight: 500; }
+  .commit-msg { color: var(--ink); }
+  .commit-time { color: var(--sage); font-size: 9px; }
+
+  .commit-type {
+    display: inline-block;
+    padding: 1px 5px;
+    border-radius: 2px;
+    font-size: 9px;
+    margin-right: 6px;
+  }
+  .commit-type.feat { background: var(--forest); color: var(--paper); }
+  .commit-type.fix { background: var(--terracotta); color: var(--paper); }
+  .commit-type.chore { background: var(--sage); color: var(--paper); }
+
+  /* STAGE 6: Test — checklist */
+  .test-list { display: grid; gap: 10px; }
+
+  .test-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    background: var(--paper-warm);
+    border-radius: 3px;
+    font-size: 13px;
+  }
+
+  .stage:nth-child(even) .test-row { background: var(--paper); }
+
+  .test-check {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--ink);
+    border-radius: 3px;
+    display: grid;
+    place-items: center;
+    font-size: 10px;
+  }
+
+  .test-check.pass { background: var(--forest); border-color: var(--forest); color: var(--paper); }
+  .test-check.fail { background: var(--terracotta); border-color: var(--terracotta); color: var(--paper); }
+
+  .test-status {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+  }
+
+  .test-status.pass { color: var(--forest); }
+  .test-status.fail { color: var(--terracotta); }
+
+  /* STAGE 7: Launch — app store card */
+  .store-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stage:nth-child(even) .store-card { background: #FAF6EC; }
+
+  .app-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--forest), var(--sage));
+    border-radius: 18px;
+    margin: 0 auto 14px;
+    display: grid;
+    place-items: center;
+    font-size: 40px;
+    box-shadow: 0 6px 16px rgba(45,74,43,0.25);
+  }
+
+  .app-name {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+
+  .app-tagline {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+
+  .stars {
+    color: var(--gold);
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .install-btn {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 8px 20px;
+    border-radius: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  .reviews {
+    margin-top: 16px;
+    text-align: left;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+
+  .review {
+    padding: 6px 0;
+    border-top: 1px dashed var(--line);
+    font-style: italic;
+    font-family: 'Fraunces', serif;
+  }
+
+  /* STAGE 8: Iterate — analytics */
+  .analytics-stack { display: grid; gap: 20px; }
+
+  .metric-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .metric-label {
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  .metric-value {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    color: var(--forest);
+  }
+
+  .metric-delta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--rust);
+    margin-left: 6px;
+  }
+
+  /* Growth curve SVG */
+  .growth-svg {
+    width: 100%;
+    height: 80px;
+  }
+
+  /* LOOP DIAGRAM */
+  .loop-section {
+    padding: 80px 0;
+    text-align: center;
+  }
+
+  .loop-section h2 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(32px, 5vw, 48px);
+    margin-bottom: 16px;
+    color: var(--forest);
+  }
+
+  .loop-intro {
+    max-width: 540px;
+    margin: 0 auto 40px;
+    color: var(--ink-soft);
+    font-size: 16px;
+  }
+
+  .loop-diagram {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 50px 0 70px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    background: var(--paper-warm);
+  }
+
+  .footer-text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .footer-mark {
+    margin-top: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--sage);
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .container { padding: 0 20px; }
+    .hero { padding: 56px 0 40px; }
+    .stage { padding: 56px 0; }
+    .stage-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+    .stage-number-line { max-width: 40px; }
+    .companion-card { padding: 14px 16px; }
+    .sticky-stack { height: 240px; }
+    .sticky { width: 150px; font-size: 12px; padding: 12px; }
+    .sticky-2 { left: 110px; }
+    .phone { width: 110px; height: 200px; }
+    .phone-row { gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">A Visual Field Guide</div>
+    <h1>How a product<br>is <em>actually</em> built</h1>
+    <p class="hero-intro">
+      Most product lifecycle diagrams give you a tidy circle with arrows and pretend that's enough. This one walks you through every stage, and at each step you'll watch a single example app, called <strong style="color:var(--forest);">Sprout</strong>, evolve from a half-formed hunch into something real.
+    </p>
+    <div class="companion-card">
+      <div class="companion-icon">🌱</div>
+      <div class="companion-text">
+        <strong>Meet Sprout.</strong> A plant care companion app. Right now it's just an idea in someone's head. By the time you reach the bottom of this page, it'll be a living product with users, reviews, and a roadmap.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STAGE 1: DISCOVERY -->
+<section class="stage">
+  <div class="container">
+    <div class="stage-grid">
+      <div class="stage-content">
+        <div class="stage-number">STAGE 01 <span class="stage-number-line"></span></div>
+        <h2>Discovery <em>&amp; ideation</em></h2>
+        <p class="stage-question">"What problem is worth solving, and for whom?"</p>
+        <p>
+          Every product starts as a hunch. Someone notices a pattern of frustration, a workaround people keep building, or a gap in how things currently work. The job at this stage isn't to design a solution, it's to <strong>understand the problem deeply enough that you'd recognize a good solution if you saw one.</strong>
+        </p>
+        <p>
+          You're not looking for ideas. You're looking for <strong>pain</strong>. Real, specific, recurring pain that a real, specific group of people experiences.
+        </p>
+        <div class="key-activities">
+          <div class="key-activities-label">Typical activities</div>
+          <span class="activity-tag">user interviews</span>
+          <span class="activity-tag">problem framing</span>
+          <span class="activity-tag">jobs-to-be-done</span>
+          <span class="activity-tag">"why" questioning</span>
+        </div>
+      </div>
+      <div class="visual-panel">
+        <div class="visual-label">Sprout at Stage 1</div>
+        <div class="sticky-stack">
+          <div class="sticky sticky-1">
+            "I keep killing my plants. I don't know if I'm overwatering or underwatering."
+            <span class="sticky-attrib">— Maya, 28</span>
+          </div>
+          <div class="sticky sticky-2">
+            "I have 14 plants and zero system. It's just guessing."
+            <span class="sticky-attrib">— Jordan, 34</span>
+          </div>
+          <div class="sticky sticky-3">
+            "Pinterest taught me to buy them. Nobody taught me to keep them alive."
+            <span class="sticky-attrib">— Sam, 24</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STAGE 2: RESEARCH -->
+<section class="stage">
+  <div class="container">
+    <div class="stage-grid">
+      <div class="stage-content">
+        <div class="stage-number">STAGE 02 <span class="stage-number-line"></span></div>
+        <h2>Research <em>&amp; validation</em></h2>
+        <p class="stage-question">"Is this real, big enough, and not already solved?"</p>
+        <p>
+          A pain point you noticed in three friends isn't yet a market. At this stage you pressure-test the hunch: how many people have it, how badly do they feel it, and what are they currently doing about it? You also look at <strong>what already exists</strong> and figure out why those solutions aren't working well enough.
+        </p>
+        <p>
+          The output here is a confident yes, no, or "yes but only if we approach it differently." Many ideas die at this stage. That's a feature, not a bug. Better to kill it on a slide than after six months of building.
+        </p>
+        <div class="key-activities">
+          <div class="key-activities-label">Typical activities</div>
+          <span class="activity-tag">market sizing</span>
+          <span class="activity-tag">competitor analysis</span>
+          <span class="activity-tag">survey data</span>
+          <span class="activity-tag">positioning</span>
+        </div>
+      </div>
+      <div class="visual-panel">
+        <div class="visual-label">Sprout at Stage 2</div>
+        <div class="research-stack">
+          <div>
+            <div class="mini-chart">
+              <div class="bar" style="height:40%"><div class="bar-label">2019</div></div>
+              <div class="bar" style="height:55%"><div class="bar-label">2020</div></div>
+              <div class="bar" style="height:72%"><div class="bar-label">2021</div></div>
+              <div class="bar" style="height:85%"><div class="bar-label">2022</div></div>
+              <div class="bar highlight" style="height:100%"><div class="bar-label">2023</div></div>
+            </div>
+            <div class="chart-title">Houseplant ownership, US adults under 35 (% growth)</div>
+          </div>
+          <div class="competitors">
+            <div class="competitor-row">
+              <span class="comp-name">Planta</span>
+              <span class="comp-tag">paywalled</span>
+            </div>
+            <div class="competitor-row">
+              <span class="comp-name">Picture This</span>
+              <span class="comp-tag">ID only, no care</span>
+            </div>
+            <div class="competitor-row">
+              <span class="comp-name">Greg</span>
+              <span class="comp-tag">complex UX</span>
+            </div>
+            <div class="competitor-row">
+              <span class="comp-name">paper notebook</span>
+              <span class="comp-tag">most common</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STAGE 3: DEFINE -->
+<section class="stage">
+  <div class="container">
+    <div class="stage-grid">
+      <div class="stage-content">
+        <div class="stage-number">STAGE 03 <span class="stage-number-line"></span></div>
+        <h2>Define <em>the MVP</em></h2>
+        <p class="stage-question">"What is the smallest thing we could ship that actually proves the idea?"</p>
+        <p>
+          MVP stands for <strong>minimum viable product</strong>. The trap most teams fall into is reading "minimum" as "small list of features" and then quietly making the list longer. The real test is sharper: if we ship just <em>this</em>, would it solve the core problem for someone, even imperfectly?
+        </p>
+        <p>
+          You're drawing a hard line between what gets built first, what gets built later, and what gets cut entirely. Everything that survives the line has to earn its place by being essential to the central promise of the product.
+        </p>
+        <div class="key-activities">
+          <div class="key-activities-label">Typical activities</div>
+          <span class="activity-tag">prioritization</span>
+          <span class="activity-tag">scoping</span>
+          <span class="activity-tag">roadmapping</span>
+          <span class="activity-tag">user stories</span>
+        </div>
+      </div>
+      <div class="visual-panel">
+        <div class="visual-label">Sprout at Stage 3</div>
+        <div class="scope-box">
+          <div class="scope-row in">
+            <span class="scope-tag">MVP</span>
+            <span>Add a plant, get a watering schedule</span>
+          </div>
+          <div class="scope-row in">
+            <span class="scope-tag">MVP</span>
+            <span>Daily reminder notifications</span>
+          </div>
+          <div class="scope-row in">
+            <span class="scope-tag">MVP</span>
+            <span>Mark as watered, log history</span>
+          </div>
+          <div class="scope-row maybe">
+            <span class="scope-tag maybe">V2</span>
+            <span>Photo identification from camera</span>
+          </div>
+          <div class="scope-row maybe">
+            <span class="scope-tag maybe">V2</span>
+            <span>Light meter using phone sensor</span>
+          </div>
+          <div class="scope-row out">
+            <span class="scope-tag out">CUT</span>
+            <span>Social feed of friends' plants</span>
+          </div>
+          <div class="scope-row out">
+            <span class="scope-tag out">CUT</span>
+            <span>Marketplace for buying plants</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STAGE 4: DESIGN -->
+<section class="stage">
+  <div class="container">
+    <div class="stage-grid">
+      <div class="stage-content">
+        <div class="stage-number">STAGE 04 <span class="stage-number-line"></span></div>
+        <h2>Design <em>the experience</em></h2>
+        <p class="stage-question">"How will this actually feel to use?"</p>
+        <p>
+          Design happens in layers. You start with rough <strong>wireframes</strong> (boxes and arrows, no styling) to figure out the bones of each screen and how someone moves through them. Then you layer in visual design, brand, copy, and interaction details to make it feel like a place rather than a form.
+        </p>
+        <p>
+          The best teams prototype early and test on real people before writing a line of production code. A confused user staring at your Figma file is worth ten polished opinions from inside the team.
+        </p>
+        <div class="key-activities">
+          <div class="key-activities-label">Typical activities</div>
+          <span class="activity-tag">wireframing</span>
+          <span class="activity-tag">user flows</span>
+          <span class="activity-tag">prototyping</span>
+          <span class="activity-tag">usability tests</span>
+        </div>
+      </div>
+      <div class="visual-panel">
+        <div class="visual-label">Sprout at Stage 4</div>
+        <div class="phone-row">
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="phone-line dark"></div>
+            <div class="phone-line short"></div>
+            <div class="phone-block green"></div>
+            <div class="phone-line medium"></div>
+            <div class="phone-line short"></div>
+          </div>
+          <div class="phone-arrow">→</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="phone-line dark"></div>
+            <div class="phone-block"></div>
+            <div class="phone-line short"></div>
+            <div class="phone-line medium"></div>
+            <div class="phone-block terra"></div>
+          </div>
+        </div>
+        <div style="text-align:center; margin-top:20px; font-family:'Fraunces',serif; font-style:italic; font-size:13px; color:var(--ink-soft);">
+          Home → Add plant flow
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STAGE 5: BUILD -->
+<section class="stage">
+  <div class="container">
+    <div class="stage-grid">
+      <div class="stage-content">
+        <div class="stage-number">STAGE 05 <span class="stage-number-line"></span></div>
+        <h2>Build <em>it</em></h2>
+        <p class="stage-question">"How do we go from designs to working software?"</p>
+        <p>
+          Engineering takes the designs and the requirements and turns them into something real. The work usually breaks into <strong>frontend</strong> (what the user sees and touches), <strong>backend</strong> (the data, logic, and integrations), and <strong>infrastructure</strong> (where it runs, how it scales, how it stays up).
+        </p>
+        <p>
+          Good teams ship in small, frequent increments rather than disappearing for six months and reemerging with a tablet from the mountain. Each merged change brings the product a measurable step closer to the MVP.
+        </p>
+        <div class="key-activities">
+          <div class="key-activities-label">Typical activities</div>
+          <span class="activity-tag">architecture</span>
+          <span class="activity-tag">coding</span>
+          <span class="activity-tag">code review</span>
+          <span class="activity-tag">continuous integration</span>
+        </div>
+      </div>
+      <div class="visual-panel">
+        <div class="visual-label">Sprout at Stage 5</div>
+        <div class="commit-list">
+          <div class="commit">
+            <span class="commit-hash">a3f1c</span>
+            <span class="commit-msg"><span class="commit-type feat">feat</span>scaffold React Native project</span>
+            <span class="commit-time">3w ago</span>
+          </div>
+          <div class="commit">
+            <span class="commit-hash">b8d22</span>
+            <span class="commit-msg"><span class="commit-type feat">feat</span>plant model + database schema</span>
+            <span class="commit-time">2w ago</span>
+          </div>
+          <div class="commit">
+            <span class="commit-hash">c4e0a</span>
+            <span class="commit-msg"><span class="commit-type feat">feat</span>add plant screen</span>
+            <span class="commit-time">2w ago</span>
+          </div>
+          <div class="commit">
+            <span class="commit-hash">d7f93</span>
+            <span class="commit-msg"><span class="commit-type fix">fix</span>watering interval off by one day</span>
+            <span class="commit-time">10d ago</span>
+          </div>
+          <div class="commit">
+            <span class="commit-hash">e9a14</span>
+            <span class="commit-msg"><span class="commit-type feat">feat</span>push notification service</span>
+            <span class="commit-time">1w ago</span>
+          </div>
+          <div class="commit">
+            <span class="commit-hash">f2c87</span>
+            <span class="commit-msg"><span class="commit-type chore">chore</span>set up TestFlight build</span>
+            <span class="commit-time">3d ago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STAGE 6: TEST -->
+<section class="stage">
+  <div class="container">
+    <div class="stage-grid">
+      <div class="stage-content">
+        <div class="stage-number">STAGE 06 <span class="stage-number-line"></span></div>
+        <h2>Test <em>&amp; refine</em></h2>
+        <p class="stage-question">"Does it actually work, and does it work for real people?"</p>
+        <p>
+          Testing is not one thing, it's a stack of overlapping checks. <strong>Unit tests</strong> verify that individual functions behave correctly. <strong>Integration tests</strong> confirm that pieces play nicely together. <strong>QA</strong> catches the things humans notice that machines don't. <strong>Beta users</strong> reveal the gap between how you think people will use it and how they actually do.
+          </p>
+        <p>
+          Every bug found at this stage is a bug your launch users don't get to find for you. This is also where security review, accessibility checks, and performance benchmarking live.
+        </p>
+        <div class="key-activities">
+          <div class="key-activities-label">Typical activities</div>
+          <span class="activity-tag">automated tests</span>
+          <span class="activity-tag">QA cycles</span>
+          <span class="activity-tag">beta testing</span>
+          <span class="activity-tag">bug triage</span>
+        </div>
+      </div>
+      <div class="visual-panel">
+        <div class="visual-label">Sprout at Stage 6</div>
+        <div class="test-list">
+          <div class="test-row">
+            <div class="test-check pass">✓</div>
+            <span>Add plant flow completes</span>
+            <span class="test-status pass">PASS</span>
+          </div>
+          <div class="test-row">
+            <div class="test-check pass">✓</div>
+            <span>Notifications fire at scheduled time</span>
+            <span class="test-status pass">PASS</span>
+          </div>
+          <div class="test-row">
+            <div class="test-check fail">✗</div>
+            <span>App crashes on slow network</span>
+            <span class="test-status fail">FAIL</span>
+          </div>
+          <div class="test-row">
+            <div class="test-check pass">✓</div>
+            <span>History log persists between sessions</span>
+            <span class="test-status pass">PASS</span>
+          </div>
+          <div class="test-row">
+            <div class="test-check fail">✗</div>
+            <span>Voiceover labels missing on home screen</span>
+            <span class="test-status fail">FAIL</span>
+          </div>
+          <div class="test-row">
+            <div class="test-check pass">✓</div>
+            <span>Beta cohort: 17 of 20 retained at day 7</span>
+            <span class="test-status pass">85%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STAGE 7: LAUNCH -->
+<section class="stage">
+  <div class="container">
+    <div class="stage-grid">
+      <div class="stage-content">
+        <div class="stage-number">STAGE 07 <span class="stage-number-line"></span></div>
+        <h2>Launch <em>into the world</em></h2>
+        <p class="stage-question">"How do we get this in front of the people who need it?"</p>
+        <p>
+          Launching is more than pressing deploy. There's the <strong>technical release</strong> (app store submission, rollout strategy, monitoring dashboards), and the <strong>go-to-market motion</strong> (positioning, messaging, channels, support readiness). A launch with no audience is a tree falling in an empty forest.
+        </p>
+        <p>
+          Smart teams launch in waves: a soft launch to a small region or a closed beta cohort first, then a wider release once they've watched the metrics and patched the obvious cracks. Big bang launches make great press releases and brittle products.
+        </p>
+        <div class="key-activities">
+          <div class="key-activities-label">Typical activities</div>
+          <span class="activity-tag">store submission</span>
+          <span class="activity-tag">marketing</span>
+          <span class="activity-tag">support setup</span>
+          <span class="activity-tag">monitoring</span>
+        </div>
+      </div>
+      <div class="visual-panel">
+        <div class="visual-label">Sprout at Stage 7</div>
+        <div class="store-card">
+          <div class="app-icon">🌱</div>
+          <div class="app-name">Sprout</div>
+          <div class="app-tagline">Keep your plants alive, one tap at a time.</div>
+          <div class="stars">★ ★ ★ ★ ☆ &nbsp;<span style="color:var(--ink-soft); font-size:11px; font-family:'IBM Plex Mono',monospace;">4.6 · 312 ratings</span></div>
+          <a class="install-btn">INSTALL</a>
+          <div class="reviews">
+            <div class="review">"Finally, an app that doesn't lecture me."</div>
+            <div class="review">"My pothos has never been happier."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STAGE 8: ITERATE -->
+<section class="stage">
+  <div class="container">
+    <div class="stage-grid">
+      <div class="stage-content">
+        <div class="stage-number">STAGE 08 <span class="stage-number-line"></span></div>
+        <h2>Iterate <em>&amp; grow</em></h2>
+        <p class="stage-question">"What does the data say, and what do we build next?"</p>
+        <p>
+          Launch isn't the finish line, it's the moment your assumptions meet reality. Now you have <strong>actual users</strong> generating actual signals: where they get stuck, what they ignore, what they ask for, where they churn. Your job is to listen carefully and choose what deserves a response.
+        </p>
+        <p>
+          Iteration runs on a feedback loop: measure, learn, prioritize, ship, measure again. The features you cut in Stage 3 come back into the conversation now, but only the ones the data actually argues for. The product is no longer just yours, it belongs to its users too.
+        </p>
+        <div class="key-activities">
+          <div class="key-activities-label">Typical activities</div>
+          <span class="activity-tag">analytics review</span>
+          <span class="activity-tag">user research</span>
+          <span class="activity-tag">feature releases</span>
+          <span class="activity-tag">retention work</span>
+        </div>
+      </div>
+      <div class="visual-panel">
+        <div class="visual-label">Sprout at Stage 8</div>
+        <div class="analytics-stack">
+          <svg class="growth-svg" viewBox="0 0 300 80" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="grad" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#2D4A2B" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#2D4A2B" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0,70 Q40,65 60,55 T120,40 T180,28 T240,15 T300,8 L300,80 L0,80 Z" fill="url(#grad)"/>
+            <path d="M0,70 Q40,65 60,55 T120,40 T180,28 T240,15 T300,8" fill="none" stroke="#2D4A2B" stroke-width="2"/>
+          </svg>
+          <div class="metric-row">
+            <span class="metric-label">Monthly active users</span>
+            <span><span class="metric-value">12.4k</span><span class="metric-delta">+38% MoM</span></span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">Day 30 retention</span>
+            <span><span class="metric-value">41%</span><span class="metric-delta">+6 pts</span></span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">Top feature request</span>
+            <span style="font-family:'Fraunces',serif; font-style:italic; font-size:14px;">Plant ID by camera</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOOP DIAGRAM -->
+<section class="loop-section">
+  <div class="container">
+    <h2>It isn't a line. It's a loop.</h2>
+    <p class="loop-intro">
+      The numbered stages are a useful teaching tool, but in practice a healthy product cycles through them continuously. Every feature is its own small lifecycle, riding on top of the larger one.
+    </p>
+    <svg class="loop-diagram" viewBox="0 0 400 280">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#2D4A2B"/>
+        </marker>
+      </defs>
+      <!-- Circular path -->
+      <circle cx="200" cy="140" r="110" fill="none" stroke="#2D4A2B" stroke-width="1.5" stroke-dasharray="3 4" marker-end="url(#arrow)"/>
+
+      <!-- Nodes -->
+      <g font-family="IBM Plex Mono" font-size="9" fill="#1C1814" text-anchor="middle">
+        <circle cx="200" cy="30" r="22" fill="#F2EDE2" stroke="#2D4A2B" stroke-width="1.5"/>
+        <text x="200" y="33">DISCOVER</text>
+
+        <circle cx="295" cy="80" r="22" fill="#F2EDE2" stroke="#2D4A2B" stroke-width="1.5"/>
+        <text x="295" y="83">RESEARCH</text>
+
+        <circle cx="320" cy="180" r="22" fill="#F2EDE2" stroke="#2D4A2B" stroke-width="1.5"/>
+        <text x="320" y="183">DEFINE</text>
+
+        <circle cx="260" cy="240" r="22" fill="#F2EDE2" stroke="#2D4A2B" stroke-width="1.5"/>
+        <text x="260" y="243">DESIGN</text>
+
+        <circle cx="140" cy="240" r="22" fill="#F2EDE2" stroke="#2D4A2B" stroke-width="1.5"/>
+        <text x="140" y="243">BUILD</text>
+
+        <circle cx="80" cy="180" r="22" fill="#F2EDE2" stroke="#2D4A2B" stroke-width="1.5"/>
+        <text x="80" y="183">TEST</text>
+
+        <circle cx="105" cy="80" r="22" fill="#F2EDE2" stroke="#2D4A2B" stroke-width="1.5"/>
+        <text x="105" y="83">LAUNCH</text>
+
+        <circle cx="200" cy="140" r="34" fill="#2D4A2B"/>
+        <text x="200" y="138" fill="#F2EDE2" font-size="10" font-weight="500">ITERATE</text>
+        <text x="200" y="152" fill="#C7D3C2" font-size="7">&amp; repeat</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<section class="footer">
+  <div class="container">
+    <p class="footer-text">
+      A product is never really finished. It just keeps becoming a better version of itself, in conversation with the people who use it.
+    </p>
+    <div class="footer-mark">END OF GUIDE · STAY CURIOUS</div>
+  </div>
+</section>
+
+</body>
+</html>

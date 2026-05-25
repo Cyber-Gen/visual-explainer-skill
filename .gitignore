@@ -1,0 +1,26 @@
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.~lock.*
+
+# Claude Code local state
+#.claude/*
+#!.claude/rules/
+.claude
+CLAUDE.md
+CLAUDE.local.md
+
+# Others
+tests/
+DEVELOPMENT.md
+
+# Output staging: guard a local ./outputs/ if anyone drops generated artifacts in
+**/outputs/
