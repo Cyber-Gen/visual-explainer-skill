@@ -35,11 +35,28 @@ Download `visual-explainer-skill-vX.Y.Z.zip` from the [latest release](https://g
 
 ```bash
 mkdir -p ~/.claude/skills
-curl -L -o /tmp/ve-skill.zip https://github.com/Cyber-Gen/visual-explainer-skill/releases/latest/download/visual-explainer-skill-latest.zip
+VERSION=X.Y.Z
+curl -L -o /tmp/ve-skill.zip "https://github.com/Cyber-Gen/visual-explainer-skill/releases/download/v${VERSION}/visual-explainer-skill-v${VERSION}.zip"
 unzip /tmp/ve-skill.zip -d ~/.claude/skills/
 ```
 
 This drops `~/.claude/skills/visual-explainer/SKILL.md` (plus its `references/` and `examples/`) — exactly the layout Claude Code expects for a standalone skill.
+
+## Releasing
+
+Release tags must match `.claude-plugin/plugin.json` exactly: if the manifest version is `0.1.0`, create the tag `v0.1.0`.
+
+```bash
+VERSION="$(jq -r '.version' .claude-plugin/plugin.json)"
+git tag -a "v${VERSION}" -m "visual-explainer v${VERSION}"
+git push origin "v${VERSION}"
+```
+
+Pushing that tag triggers `/home/runner/work/visual-explainer-skill/visual-explainer-skill/.github/workflows/release.yml`, which publishes:
+
+- `visual-explainer-plugin-vX.Y.Z.zip`
+- `visual-explainer-skill-vX.Y.Z.zip`
+- `release-assets-sha256.txt`
 
 ## Invoke
 
