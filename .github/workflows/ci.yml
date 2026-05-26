@@ -29,7 +29,7 @@ jobs:
           jq -e '.description != null and (.description | length) > 0' "$manifest" >/dev/null \
             || { echo "FAIL: description missing or empty"; exit 1; }
 
-      - name: SKILL.md frontmatter (name + description present)
+      - name: SKILL.md frontmatter + trigger-phrase floor
         run: |
           set -euo pipefail
           skill=skills/visual-explainer/SKILL.md
@@ -37,8 +37,25 @@ jobs:
           awk 'NR==1 && /^---$/ {f=1; next} f && /^---$/ {exit} f' "$skill" > /tmp/fm.yml
           grep -qE '^name:[[:space:]]*visual-explainer\b' /tmp/fm.yml \
             || { echo "FAIL: SKILL.md frontmatter missing 'name: visual-explainer'"; exit 1; }
-          grep -qE '^description:[[:space:]]*' /tmp/fm.yml \
+          grep -qE '^description:' /tmp/fm.yml \
             || { echo "FAIL: SKILL.md frontmatter missing 'description'"; exit 1; }
+          description="$(awk '/^description:/{sub(/^description:[[:space:]]*/,""); print; exit}' /tmp/fm.yml)"
+          phrases=("explain" "teach" "walk me through" "help me understand" "break down" "visualize" "primer" "field guide" "deep-dive" "visual learner")
+          hit=0
+          missing=()
+          for p in "${phrases[@]}"; do
+            if grep -qiF "$p" <<<"$description"; then
+              hit=$((hit + 1))
+            else
+              missing+=("$p")
+            fi
+          done
+          if [ "$hit" -lt 5 ]; then
+            echo "FAIL: only $hit canonical trigger phrases in description; need >= 5"
+            echo "  missing: ${missing[*]}"
+            exit 1
+          fi
+          echo "OK: $hit/${#phrases[@]} trigger phrases present"
 
       - name: SKILL.md path integrity (references/ + examples/)
         run: |
@@ -53,4 +70,30 @@ jobs:
               missing=$((missing + 1))
             fi
           done < <(grep -oE '(references|examples)/[A-Za-z0-9._/-]+' "$skill" | sort -u)
+          [ "$missing" -eq 0 ]
+
+      - name: Canonical example passes structural checker
+        run: |
+          ./tests/check_artifact.sh skills/visual-explainer/examples/reference-example.html
+
+      - name: Packaging allowlist files present
+        run: |
+          set -euo pipefail
+          files=(
+            ".claude-plugin/plugin.json"
+            "skills/visual-explainer/SKILL.md"
+            "skills/visual-explainer/references/design-system.md"
+            "skills/visual-explainer/references/visual-snapshot-library.md"
+            "skills/visual-explainer/references/writing-voice.md"
+            "skills/visual-explainer/examples/reference-example.html"
+            "README.md"
+            "LICENSE"
+          )
+          missing=0
+          for f in "${files[@]}"; do
+            if [ ! -f "$f" ]; then
+              echo "MISS $f"
+              missing=$((missing + 1))
+            fi
+          done
           [ "$missing" -eq 0 ]

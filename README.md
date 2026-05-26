@@ -18,44 +18,33 @@ A single self-contained HTML file with editorial-quality typography, custom visu
 
 ## Install
 
-Two install paths, depending on whether you want the full plugin or just the skill.
+Two install paths, depending on whether you install as plugin or skill.
 
-### Option 1 — Full plugin (recommended)
+### Option 1 — Plugin (recommended for Claude ecosystem)
 
 Download `visual-explainer-plugin-vX.Y.Z.zip` from the [latest release](https://github.com/Cyber-Gen/visual-explainer-skill/releases/latest).
 
-#### Upload in Claude.ai / Claude Desktop
-
-Use the same plugin upload flow in Claude.ai and Claude Desktop. Cowork, Chat, and Code should all accept the exact same `plugin.zip`.
+#### Upload in Claude.ai / Claude Desktop app
 
 1. Download `visual-explainer-plugin-vX.Y.Z.zip`.
-2. Open the plugin installer / upload flow in Claude.ai or Claude Desktop.
-3. Choose **Upload plugin** and select the zip.
-4. Confirm the install and enable `visual-explainer`.
-5. Invoke it normally after install.
+2. Open the **Customize** page
+3. Select **+** sign next to Personal plugin
+4. Choose **Upload plugin** and select the zipped plugin.
+5. Confirm the install and enable `visual-explainer`.
 
-#### Claude Code development install
-
-```bash
-git clone https://github.com/Cyber-Gen/visual-explainer-skill.git
-claude --plugin-dir ./visual-explainer-skill
-```
-
-### Option 2 — Skill only
+### Option 2 — Skill 
 
 Download `visual-explainer-skill-vX.Y.Z.zip` from the [latest release](https://github.com/Cyber-Gen/visual-explainer-skill/releases/latest).
 
 #### Upload in Claude.ai / Claude Desktop
 
-Use the same skill upload flow in Claude.ai and Claude Desktop. Cowork, Chat, and Code should all accept the exact same `skill.zip`.
-
 1. Download `visual-explainer-skill-vX.Y.Z.zip`.
-2. Open the skill installer / upload flow in Claude.ai or Claude Desktop.
-3. Choose **Upload skill** and select the zip.
-4. Confirm the install and enable `visual-explainer`.
-5. Invoke it normally after install.
+2. Open the **Customize** page and navigate to **Skills** section
+3. Select **+** sign to add a new skill
+4. Choose **Upload a skill** and select the zipped skill.
+5. Confirm the install and enable `visual-explainer`.
 
-#### Claude Code filesystem install
+#### Claude Code CLI
 
 ```bash
 mkdir -p ~/.claude/skills
@@ -64,27 +53,7 @@ curl -L -o /tmp/ve-skill.zip "https://github.com/Cyber-Gen/visual-explainer-skil
 unzip /tmp/ve-skill.zip -d ~/.claude/skills/
 ```
 
-This drops `~/.claude/skills/visual-explainer/SKILL.md` (plus its `references/` and `examples/`) — exactly the layout Claude Code expects for a standalone skill.
-
-## Releasing
-
-Release tags must match `.claude-plugin/plugin.json` exactly: if the manifest version is `0.1.0`, create the tag `v0.1.0`.
-
-```bash
-VERSION="$(jq -r '.version' .claude-plugin/plugin.json)"
-git tag -a "v${VERSION}" -m "visual-explainer v${VERSION}"
-git push origin "v${VERSION}"
-```
-
-Pushing that tag triggers `.github/workflows/release.yml`, which publishes:
-
-- `visual-explainer-plugin-vX.Y.Z.zip`
-- `visual-explainer-skill-vX.Y.Z.zip`
-- `release-assets-sha256.txt`
-
-If you create the tag in GitHub instead of locally, use the same `vX.Y.Z` name and point it at the commit whose `.claude-plugin/plugin.json` already contains `X.Y.Z`.
-
-## Invoke
+## Usage
 
 Once installed, the skill can be invoked by either:
 
@@ -93,10 +62,9 @@ Once installed, the skill can be invoked by either:
 2. Automatically using triggering prompts like:
 
     ```text
-    "Help me understand how OAuth works"
-    "Walk me through the product launch lifecycle"
-    "I'm a visual learner — break down the SAFe framework"
-    "Build me a primer on venture funding rounds"
+    "Create a visual explainer for how OAuth works"
+    "Build a step-by-step visual explainer of the product launch lifecycle"
+    "I'm a visual learner – break down the SAFe framework for me"
     ```
 
 ---

@@ -19,8 +19,8 @@ CLAUDE.md
 CLAUDE.local.md
 
 # Others
-tests/
 DEVELOPMENT.md
+TESTING_AND_EVALS.md
 
 # Output staging: guard a local ./outputs/ if anyone drops generated artifacts in
 **/outputs/
